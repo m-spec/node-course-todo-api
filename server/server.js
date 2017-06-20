@@ -50,7 +50,7 @@ app.get('/todos/:id', (req, res) => {
     res.send({ todo })
 
   }).catch((e) => {
-    res.status(400).send()
+    res.status(400).send(e)
   })
 })
 
@@ -95,7 +95,7 @@ app.patch('/todos/:id', (req, res) => {
 
     res.send({ todo })
   }).catch((e) => {
-    res.status(400).send()
+    res.status(400).send(e)
   })
 })
 
@@ -114,6 +114,19 @@ app.post('/users', (req, res) => {
 
 app.get('/users/me', authenticate, (req, res) => {
   res.send(req.user)
+})
+
+// POST /users/login { email, password }
+app.post('/users/login', (req, res) => {
+  const { email, password } = req.body
+
+  User.findByCredentials(email, password).then((user) => {
+    user.generateAuthToken().then((token) => {
+      res.header('x-auth', token).send(user)
+    })
+  }).catch((err) => {
+    res.status(400).send()
+  })
 })
 
 app.listen(port, () => {

@@ -13,7 +13,7 @@ const password = '123abc!'
 const hashedPassword = '$2a$10$Q3uPR2btQfypAHFqvkR3y.AU1Ab6u6k.4uSkYipfZeKM89NIFnIuu'
 
 bcrypt.compare(password, hashedPassword, (err, res) => {
-  console.log(res);
+  console.log(res)
 })
 
 const data = {
@@ -24,7 +24,7 @@ const token = jwt.sign(data, '123abc')
 console.log(token)
 
 const decoded = jwt.verify(token, '123abc')
-console.log('decoded', decoded);
+console.log('decoded', decoded)
 
 // jwt.verify
 
